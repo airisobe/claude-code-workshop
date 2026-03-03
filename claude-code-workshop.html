@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Code 体験ワークショップ｜自分のポートフォリオサイトを作ろう</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+JP:wght@300;400;500;700;900&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --c-bg: #0a0a0f;
+  --c-bg-card: #12121a;
+  --c-bg-card-hover: #1a1a26;
+  --c-bg-code: #0d0d14;
+  --c-surface: #1e1e2a;
+  --c-border: #2a2a3a;
+  --c-border-subtle: #1e1e2e;
+  --c-text: #e8e8f0;
+  --c-text-dim: #8888a0;
+  --c-text-muted: #555568;
+  --c-accent: #ff6b4a;
+  --c-blue: #4a9eff;
+  --c-blue-glow: rgba(74, 158, 255, 0.12);
+  --c-green: #4ae88a;
+  --c-green-glow: rgba(74, 232, 138, 0.10);
+  --c-purple: #a78bfa;
+  --c-yellow: #fbbf24;
+  --c-yellow-glow: rgba(251, 191, 36, 0.10);
+  --font-display: 'Outfit', 'Noto Sans JP', sans-serif;
+  --font-body: 'Noto Sans JP', sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Menlo', monospace;
+  --radius: 12px;
+  --radius-lg: 20px;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+body { font-family: var(--font-body); background: var(--c-bg); color: var(--c-text); line-height: 1.8; font-size: 15px; -webkit-font-smoothing: antialiased; }
+::selection { background: var(--c-accent); color: white; }
+
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(10,10,15,0.85); backdrop-filter: blur(20px) saturate(180%); border-bottom: 1px solid var(--c-border-subtle); }
+nav .nav-inner { max-width: 900px; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; height: 60px; }
+nav .nav-logo { font-family: var(--font-display); font-weight: 700; font-size: 14px; letter-spacing: 0.05em; color: var(--c-text-dim); }
+nav .nav-logo span { color: var(--c-accent); }
+nav .nav-links { display: flex; gap: 6px; }
+nav .nav-links a { color: var(--c-text-dim); text-decoration: none; font-size: 12px; font-weight: 500; padding: 6px 12px; border-radius: 6px; transition: all 0.2s; }
+nav .nav-links a:hover { color: var(--c-text); background: var(--c-surface); }
+
+.hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 120px 32px 80px; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(ellipse 600px 400px at 30% 40%, rgba(255,107,74,0.06) 0%, transparent 70%), radial-gradient(ellipse 500px 500px at 70% 60%, rgba(74,158,255,0.04) 0%, transparent 70%); animation: heroGlow 12s ease-in-out infinite alternate; }
+@keyframes heroGlow { 0% { transform: translate(0,0); } 100% { transform: translate(-30px,-20px); } }
+.hero-badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 18px; background: var(--c-surface); border: 1px solid var(--c-border); border-radius: 100px; font-size: 12px; font-weight: 500; color: var(--c-text-dim); margin-bottom: 40px; position: relative; z-index: 1; animation: fadeUp 0.8s var(--ease) both; }
+.hero-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--c-green); animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
+.hero h1 { font-family: var(--font-display); font-size: clamp(42px,7vw,72px); font-weight: 800; line-height: 1.1; letter-spacing: -0.03em; position: relative; z-index: 1; animation: fadeUp 0.8s var(--ease) 0.1s both; }
+.hero h1 .accent { background: linear-gradient(135deg, var(--c-accent), #ff8f73); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.hero-sub { font-size: 17px; color: var(--c-text-dim); margin-top: 24px; font-weight: 300; line-height: 1.7; position: relative; z-index: 1; animation: fadeUp 0.8s var(--ease) 0.2s both; }
+.hero-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 56px; position: relative; z-index: 1; width: 100%; max-width: 560px; animation: fadeUp 0.8s var(--ease) 0.35s both; }
+.hero-card { background: var(--c-bg-card); border: 1px solid var(--c-border); border-radius: var(--radius); padding: 20px 16px; text-align: center; transition: all 0.3s var(--ease); }
+.hero-card:hover { background: var(--c-bg-card-hover); transform: translateY(-2px); }
+.hero-card .icon { font-size: 24px; margin-bottom: 8px; display: block; }
+.hero-card .label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--c-text-muted); margin-bottom: 4px; }
+.hero-card .value { font-family: var(--font-display); font-weight: 600; font-size: 14px; }
+@keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+
+.container { max-width: 780px; margin: 0 auto; padding: 0 32px; }
+section { padding: 80px 0; }
+.divider { height: 1px; background: linear-gradient(90deg, transparent, var(--c-border), transparent); }
+
+.toc { padding: 80px 0; }
+.toc h2 { font-family: var(--font-display); font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: var(--c-text-muted); margin-bottom: 32px; }
+.timeline { display: flex; flex-direction: column; gap: 2px; }
+.timeline-item { display: grid; grid-template-columns: 60px 1fr auto; align-items: center; gap: 20px; padding: 16px 20px; border-radius: var(--radius); transition: all 0.2s; text-decoration: none; color: inherit; cursor: pointer; }
+.timeline-item:hover { background: var(--c-bg-card); }
+.timeline-item .time { font-family: var(--font-mono); font-size: 13px; color: var(--c-text-muted); font-weight: 500; }
+.timeline-item .title { font-weight: 500; font-size: 15px; }
+.timeline-item .duration { font-family: var(--font-mono); font-size: 12px; color: var(--c-text-muted); padding: 4px 10px; background: var(--c-surface); border-radius: 100px; }
+
+.milestone-header { padding: 48px 40px; border-radius: var(--radius-lg); margin-bottom: 48px; position: relative; overflow: hidden; }
+.milestone-header::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.03)); pointer-events: none; }
+.milestone-header.m0 { background: linear-gradient(135deg, #2d1b69, #1a1145); border: 1px solid rgba(167,139,250,0.2); }
+.milestone-header.m1 { background: linear-gradient(135deg, #0f2f5e, #0a1a35); border: 1px solid rgba(74,158,255,0.2); }
+.milestone-header.m2 { background: linear-gradient(135deg, #3d1520, #250d15); border: 1px solid rgba(255,107,74,0.2); }
+.milestone-header.m3 { background: linear-gradient(135deg, #0d3324, #081f16); border: 1px solid rgba(74,232,138,0.2); }
+.milestone-header .ms-label { font-family: var(--font-mono); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em; opacity: 0.5; margin-bottom: 12px; }
+.milestone-header h2 { font-family: var(--font-display); font-size: clamp(24px,4vw,32px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.3; margin-bottom: 12px; }
+.milestone-header .ms-time { font-family: var(--font-mono); font-size: 13px; opacity: 0.5; }
+
+h3 { font-family: var(--font-display); font-size: 20px; font-weight: 600; letter-spacing: -0.01em; margin: 48px 0 16px; }
+h3:first-child { margin-top: 0; }
+p { color: var(--c-text-dim); margin-bottom: 16px; line-height: 1.9; }
+p strong, p b { color: var(--c-text); font-weight: 500; }
+
+.code-block { position: relative; margin: 16px 0 24px; background: var(--c-bg-code); border: 1px solid var(--c-border-subtle); border-radius: var(--radius); overflow: hidden; }
+.code-block .code-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; border-bottom: 1px solid var(--c-border-subtle); background: rgba(255,255,255,0.02); }
+.code-block .code-lang { font-family: var(--font-mono); font-size: 11px; color: var(--c-text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+.code-block .copy-btn { background: none; border: 1px solid var(--c-border); border-radius: 6px; padding: 4px 12px; font-family: var(--font-mono); font-size: 11px; color: var(--c-text-dim); cursor: pointer; transition: all 0.2s; }
+.code-block .copy-btn:hover { background: var(--c-surface); color: var(--c-text); border-color: var(--c-text-muted); }
+.code-block .copy-btn.copied { color: var(--c-green); border-color: var(--c-green); }
+.code-block pre { padding: 20px 24px; overflow-x: auto; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.7; color: #c8c8d8; white-space: pre-wrap; word-wrap: break-word; }
+.code-block pre .comment { color: #5a5a70; }
+.code-block pre .prompt { color: var(--c-accent); }
+code { font-family: var(--font-mono); font-size: 13px; background: var(--c-surface); padding: 2px 8px; border-radius: 4px; color: var(--c-blue); }
+
+.callout { padding: 20px 24px; border-radius: var(--radius); margin: 24px 0; border: 1px solid; }
+.callout .callout-title { font-family: var(--font-display); font-weight: 600; font-size: 13px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+.callout p { font-size: 14px; margin-bottom: 0; line-height: 1.8; }
+.callout.tip { background: var(--c-yellow-glow); border-color: rgba(251,191,36,0.2); }
+.callout.tip .callout-title { color: var(--c-yellow); }
+.callout.tip p { color: #d4b44a; }
+.callout.success { background: var(--c-green-glow); border-color: rgba(74,232,138,0.2); }
+.callout.success .callout-title { color: var(--c-green); }
+.callout.success p { color: #6ec89a; }
+.callout.info { background: var(--c-blue-glow); border-color: rgba(74,158,255,0.2); }
+.callout.info .callout-title { color: var(--c-blue); }
+.callout.info p { color: #7ab4e8; }
+
+table { width: 100%; border-collapse: collapse; margin: 20px 0 28px; font-size: 14px; }
+thead th { text-align: left; padding: 12px 16px; font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--c-text-muted); border-bottom: 1px solid var(--c-border); }
+tbody td { padding: 14px 16px; border-bottom: 1px solid var(--c-border-subtle); color: var(--c-text-dim); }
+tbody tr:hover { background: var(--c-bg-card); }
+tbody td:first-child { font-family: var(--font-mono); font-size: 13px; color: var(--c-blue); white-space: nowrap; }
+
+.step-list { display: flex; flex-direction: column; gap: 6px; margin: 16px 0 24px; }
+.step-item { display: flex; align-items: flex-start; gap: 14px; padding: 12px 16px; border-radius: 8px; background: var(--c-bg-card); border: 1px solid transparent; transition: all 0.2s; }
+.step-item:hover { border-color: var(--c-border-subtle); }
+.step-item .step-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--c-accent); flex-shrink: 0; margin-top: 9px; }
+.step-item p { margin: 0; font-size: 14px; }
+
+.idea-grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin: 24px 0; }
+.idea-card { background: var(--c-bg-card); border: 1px solid var(--c-border); border-radius: var(--radius); padding: 24px; transition: all 0.3s var(--ease); }
+.idea-card:hover { border-color: var(--c-accent); background: var(--c-bg-card-hover); transform: translateY(-1px); }
+.idea-card .idea-label { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--c-accent); margin-bottom: 8px; }
+.idea-card h4 { font-family: var(--font-display); font-weight: 600; font-size: 16px; margin-bottom: 8px; }
+.idea-card p { font-size: 14px; margin-bottom: 0; }
+
+.compare-table td:nth-child(2) { color: #cc6666; }
+.compare-table td:nth-child(3) { color: var(--c-green); }
+
+details { background: var(--c-bg-card); border: 1px solid var(--c-border); border-radius: var(--radius); margin-bottom: 8px; overflow: hidden; transition: all 0.2s; }
+details:hover { border-color: var(--c-text-muted); }
+details[open] { border-color: var(--c-accent); }
+details summary { padding: 16px 20px; font-weight: 500; font-size: 14px; cursor: pointer; color: var(--c-text); list-style: none; display: flex; align-items: center; gap: 12px; }
+details summary::before { content: '\25B8'; font-size: 12px; color: var(--c-text-muted); transition: transform 0.2s; }
+details[open] summary::before { transform: rotate(90deg); color: var(--c-accent); }
+details summary::-webkit-details-marker { display: none; }
+details > p { padding: 0 20px 16px; font-size: 14px; line-height: 1.8; }
+
+footer { text-align: center; padding: 60px 32px 40px; color: var(--c-text-muted); font-size: 13px; }
+footer .closing { font-family: var(--font-display); font-size: 20px; font-weight: 600; letter-spacing: -0.01em; color: var(--c-text-dim); margin-bottom: 8px; }
+footer .closing-sub { font-weight: 300; color: var(--c-text-muted); font-size: 14px; }
+
+.fade-in { opacity: 0; transform: translateY(16px); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease); }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 640px) {
+  .hero-cards { grid-template-columns: 1fr; max-width: 280px; }
+  .hero { padding: 100px 24px 60px; }
+  .container { padding: 0 20px; }
+  .milestone-header { padding: 32px 24px; }
+  .timeline-item { grid-template-columns: 50px 1fr auto; gap: 12px; padding: 12px; }
+  nav .nav-links { display: none; }
+  h3 { font-size: 18px; }
+}
+</style>
+</head>
+<body>
+
+<nav><div class="nav-inner">
+  <div class="nav-logo"><span>Claude Code</span> Workshop</div>
+  <div class="nav-links">
+    <a href="#milestone-0">準備</a><a href="#milestone-1">基本</a><a href="#milestone-2">本番</a><a href="#milestone-3">応用</a><a href="#troubleshooting">FAQ</a>
+  </div>
+</div></nav>
+
+<header class="hero">
+  <div class="hero-badge"><span class="dot"></span>Non-Engineer Workshop</div>
+  <h1><span class="accent">Claude Code</span>で<br>ポートフォリオサイトを作ろう</h1>
+  <p class="hero-sub">プログラミング経験ゼロでも大丈夫。<br>日本語で話しかけるだけで、自分だけのWebサイトが完成します。</p>
+  <div class="hero-cards">
+    <div class="hero-card"><span class="icon">⏱</span><div class="label">所要時間</div><div class="value">約 1.5 〜 2h</div></div>
+    <div class="hero-card"><span class="icon">💻</span><div class="label">対象環境</div><div class="value">Mac</div></div>
+    <div class="hero-card"><span class="icon">🎯</span><div class="label">完成物</div><div class="value">自分のサイト</div></div>
+  </div>
+</header>
+
+<div class="divider"></div>
+<section class="toc"><div class="container">
+  <h2>Timeline</h2>
+  <div class="timeline">
+    <a class="timeline-item" href="#milestone-0"><span class="time">0:00</span><span class="title">Milestone 0 — 事前準備：環境構築</span><span class="duration">15 min</span></a>
+    <a class="timeline-item" href="#milestone-1"><span class="time">0:15</span><span class="title">Milestone 1 — はじめの一歩：Claude Code と会話する</span><span class="duration">10 min</span></a>
+    <a class="timeline-item" href="#milestone-2"><span class="time">0:25</span><span class="title">Milestone 2 — 本番：ポートフォリオサイトを作る</span><span class="duration">40 min</span></a>
+    <a class="timeline-item" href="#milestone-3"><span class="time">1:05</span><span class="title">Milestone 3 — 応用：デザインと中身をカスタマイズ</span><span class="duration">20 min</span></a>
+    <a class="timeline-item" href="#next-steps"><span class="time">1:25</span><span class="title">完了！公開方法＆次のステップ</span><span class="duration">—</span></a>
+  </div>
+</div></section>
+
+<div class="divider"></div>
+<section><div class="container">
+  <h3>Claude Code とは？</h3>
+  <p>Claude Code は、Anthropic が提供する<strong>コマンドライン型のAIアシスタント</strong>です。普段使っている Claude（チャット画面）とは違い、<strong>ターミナル</strong>の中で直接動きます。</p>
+  <p>最大の特徴は、会話するだけで<strong>ファイルを作成・編集したり、コマンドを実行</strong>できること。「こういうサイト作って」と日本語で頼むだけで、HTML・CSS・JavaScript を書いて本当に動く Web サイトを作ってくれます。</p>
+  <h3>今日のゴール</h3>
+  <p>このワークショップが終わる頃には、<strong>あなた自身のポートフォリオサイト</strong>が手元で完成しています。名前、自己紹介、スキル、実績などを載せた、ブラウザで見られる本物の Web サイトです。</p>
+  <div class="callout tip">
+    <div class="callout-title">💡 ポイント</div>
+    <p>プログラミングの知識は一切不要です。大切なのは「自分のサイトにどんな情報を載せたいか」を考えること。今日は<strong>「日本語で指示を出す力」</strong>がそのまま Web 制作スキルになります。</p>
+  </div>
+</div></section>
+
+<div class="divider"></div>
+<section id="milestone-0"><div class="container">
+  <div class="milestone-header m0 fade-in"><div class="ms-label">Milestone 0</div><h2>事前準備：環境構築</h2><div class="ms-time">⏱ 約 15分</div></div>
+  <p>まず Claude Code を動かすために必要なソフトウェアをインストールします。ターミナルにコマンドを貼り付けて Enter を押すだけです。</p>
+
+  <h3>0-1. ターミナルを開く</h3>
+  <p>Mac には「ターミナル」というアプリが最初から入っています。</p>
+  <div class="step-list">
+    <div class="step-item"><div class="step-dot"></div><p><strong>方法A：</strong><code>⌘</code> + <code>スペース</code> で Spotlight を開き、「ターミナル」と入力して Enter</p></div>
+    <div class="step-item"><div class="step-dot"></div><p><strong>方法B：</strong>Finder → アプリケーション → ユーティリティ → ターミナル.app</p></div>
+  </div>
+  <div class="callout tip"><div class="callout-title">💡 ヒント</div><p>黒い（または白い）画面が表示されれば OK です。ここに指示を「貼り付けて Enter」するだけなので安心してください。</p></div>
+
+  <h3>0-2. Node.js をインストールする</h3>
+  <p>Claude Code を動かすには Node.js（バージョン18以上）が必要です。まず確認しましょう。</p>
+  <div class="code-block"><div class="code-header"><span class="code-lang">Terminal</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre>node --version</pre></div>
+  <p><code>v18.x.x</code> や <code>v20.x.x</code> のように表示されたらインストール済みです。「command not found」と出たら、以下でインストールします。</p>
+  <div class="code-block"><div class="code-header"><span class="code-lang">Terminal — Homebrew 経由</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre><span class="comment"># Homebrew が入っていない場合、まず Homebrew をインストール</span>
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+<span class="comment"># Node.js をインストール</span>
+brew install node</pre></div>
+  <p>または Node.js 公式サイト（<strong>https://nodejs.org</strong>）から「LTS」版のインストーラーをダウンロードしてもOKです。</p>
+
+  <h3>0-3. Claude Code をインストールする</h3>
+  <div class="code-block"><div class="code-header"><span class="code-lang">Terminal</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre>npm install -g @anthropic-ai/claude-code</pre></div>
+  <p>インストールが完了したら確認しましょう。</p>
+  <div class="code-block"><div class="code-header"><span class="code-lang">Terminal</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre>claude --version</pre></div>
+
+  <h3>0-4. ログインする</h3>
+  <div class="code-block"><div class="code-header"><span class="code-lang">Terminal</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre>claude</pre></div>
+  <p>ブラウザが自動で開くので、Anthropic アカウントでログインしてください。完了するとターミナルに戻って Claude Code が使えるようになります。</p>
+  <div class="callout success"><div class="callout-title">✅ Milestone 0 完了チェック</div><p>・ターミナルが開いている<br>・<code>node --version</code> でバージョンが表示される<br>・<code>claude --version</code> でバージョンが表示される</p></div>
+</div></section>
+
+<div class="divider"></div>
+<section id="milestone-1"><div class="container">
+  <div class="milestone-header m1 fade-in"><div class="ms-label">Milestone 1</div><h2>はじめの一歩：Claude Code と会話する</h2><div class="ms-time">⏱ 約 10分</div></div>
+  <p>環境構築おつかれさまでした！ここからが楽しいパートです。まずは Claude Code に慣れましょう。</p>
+
+  <h3>1-1. 作業フォルダを作って移動する</h3>
+  <div class="code-block"><div class="code-header"><span class="code-lang">Terminal</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre>mkdir ~/my-portfolio
+cd ~/my-portfolio</pre></div>
+
+  <h3>1-2. Claude Code を起動する</h3>
+  <div class="code-block"><div class="code-header"><span class="code-lang">Terminal</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre>claude</pre></div>
+  <p>入力待ちの状態になったら、日本語で話しかけてみましょう。</p>
+
+  <h3>1-3. ウォーミングアップ</h3>
+  <p>まずは簡単なお願いをして感覚を掴みます。</p>
+  <div class="code-block"><div class="code-header"><span class="code-lang">Claude Code に入力</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre><span class="prompt">&gt;</span> このフォルダの中身を教えて</pre></div>
+  <p>まだ空のはずです。次に、簡単なファイルを作ってもらいましょう。</p>
+  <div class="code-block"><div class="code-header"><span class="code-lang">Claude Code に入力</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre><span class="prompt">&gt;</span> 「hello.html」を作って。中に「こんにちは、私のサイトです！」と大きく表示されるHTMLを書いて</pre></div>
+  <p>ファイル作成の許可を求めてくるので、<strong>y</strong> を押してください。次に、作ったファイルをブラウザで確認してみましょう。</p>
+  <div class="code-block"><div class="code-header"><span class="code-lang">Claude Code に入力</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre><span class="prompt">&gt;</span> 今作ったファイルをブラウザで開いて</pre></div>
+  <p>ブラウザに「こんにちは、私のサイトです！」と表示されたら成功です！<strong>これがあなたの最初の Web ページです。</strong></p>
+
+  <div class="callout info"><div class="callout-title">ℹ️ Chat の Claude との違い</div><p>Claude Code は「ターミナルの中で動く Claude」です。ファイルの作成、コードの実行、ブラウザで開くなど<strong>パソコン上の操作を会話しながら実行</strong>できます。チャットの Claude が「コードを見せる」だけなのに対し、Claude Code は「実際にファイルを作って動かす」ことができます。</p></div>
+
+  <h3>1-4. 覚えておくと便利なコマンド</h3>
+  <table>
+    <thead><tr><th>コマンド</th><th>説明</th></tr></thead>
+    <tbody>
+      <tr><td>/help</td><td>ヘルプを表示</td></tr>
+      <tr><td>/clear</td><td>会話履歴をクリア</td></tr>
+      <tr><td>Ctrl + C</td><td>現在の処理を中止</td></tr>
+      <tr><td>/exit</td><td>Claude Code を終了</td></tr>
+      <tr><td>Esc × 2</td><td>入力途中のテキストを破棄</td></tr>
+    </tbody>
+  </table>
+  <div class="callout success"><div class="callout-title">✅ Milestone 1 完了チェック</div><p>・Claude Code で会話ができた<br>・HTML ファイルが作られた<br>・ブラウザで自分のページが表示された</p></div>
+</div></section>
+
+<div class="divider"></div>
+<section id="milestone-2"><div class="container">
+  <div class="milestone-header m2 fade-in"><div class="ms-label">Milestone 2</div><h2>本番：ポートフォリオサイトを作る</h2><div class="ms-time">⏱ 約 40分</div></div>
+  <p>いよいよ本番です！ Milestone 1 で作った hello.html は練習用だったので、ここからは本格的な<strong>自分のポートフォリオサイト</strong>を作っていきます。</p>
+
+  <h3>2-1. 自分の情報を整理する（2分）</h3>
+  <p>Claude Code に渡す前に、載せたい内容をざっくり決めておきましょう。メモ帳やノートに書き出してみてください。</p>
+  <table>
+    <thead><tr><th>項目</th><th>例</th></tr></thead>
+    <tbody>
+      <tr><td>名前</td><td>田中 花子</td></tr>
+      <tr><td>肩書き / 一言</td><td>SNSマーケター / 「届く言葉を、届く場所に」</td></tr>
+      <tr><td>自己紹介（2〜3行）</td><td>SNSマーケティング歴3年。美容・食品ブランドを中心に…</td></tr>
+      <tr><td>スキル・得意分野</td><td>Instagram運用、TikTok広告、コンテンツ企画</td></tr>
+      <tr><td>実績（2〜3個）</td><td>化粧品ブランドA：フォロワー 1万→5万 に成長 など</td></tr>
+      <tr><td>連絡先</td><td>メールアドレス、X アカウントなど</td></tr>
+    </tbody>
+  </table>
+  <div class="callout tip"><div class="callout-title">💡 ヒント</div><p>全部埋まらなくても大丈夫！最低限「名前」「肩書き」「自己紹介」があれば形になります。あとから追加・修正できるので、まずは手を動かしましょう。</p></div>
+
+  <h3>2-2. Claude Code にサイトを作ってもらう</h3>
+  <p>以下の指示をコピーし、<strong>★の部分を自分の情報に書き換えて</strong>から Claude Code に貼り付けてください。</p>
+  <div class="code-block"><div class="code-header"><span class="code-lang">Claude Code に入力（★を自分の情報に書き換える）</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre>hello.html は削除して、以下の情報をもとにポートフォリオサイトを作って。
+ファイル名は index.html で、1ファイルで完結するようにして（CSS/JSも中に書く）。
+
+【私の情報】
+- 名前: ★ 自分の名前
+- 肩書き: ★ 自分の肩書き / キャッチコピー
+- 自己紹介: ★ 2〜3行の自己紹介
+- スキル: ★ スキルをカンマ区切りで
+- 実績:
+  - ★ 実績1
+  - ★ 実績2
+  - ★ 実績3
+- 連絡先: ★ メールやSNSのURL
+
+【デザインの要望】
+- モダンでおしゃれなデザイン
+- ダークテーマ
+- スクロールアニメーション付き
+- スマホでもきれいに見える（レスポンシブ対応）
+- セクション: ヒーロー（名前＋肩書き）、自己紹介、スキル、実績、連絡先</pre></div>
+  <p>Enter を押すと Claude Code が作業を開始します。ファイルの作成・削除の許可を求められたら <strong>y</strong> を押してください。1〜2分ほどで完成します。</p>
+
+  <h3>2-3. ブラウザで確認する</h3>
+  <div class="code-block"><div class="code-header"><span class="code-lang">Claude Code に入力</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre><span class="prompt">&gt;</span> ブラウザで開いて</pre></div>
+  <p><strong>自分の名前やプロフィールが載ったポートフォリオサイト</strong>がブラウザに表示されるはずです！</p>
+
+  <h3>2-4. 気になるところを直す</h3>
+  <p>最初の出力を見て「もっとこうしたい」と思ったら、そのまま日本語で伝えましょう。これが Claude Code の真骨頂です。</p>
+  <div class="code-block"><div class="code-header"><span class="code-lang">修正の指示例</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre><span class="prompt">&gt;</span> ヒーローセクションの背景をもっと暗くして、名前をもっと大きくして</pre></div>
+  <div class="code-block"><div class="code-header"><span class="code-lang">修正の指示例</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre><span class="prompt">&gt;</span> スキルのセクションをカード型のレイアウトに変えて</pre></div>
+  <div class="code-block"><div class="code-header"><span class="code-lang">修正の指示例</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre><span class="prompt">&gt;</span> 実績の部分に数字を大きく表示して、インパクトを出して</pre></div>
+  <div class="code-block"><div class="code-header"><span class="code-lang">修正の指示例</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre><span class="prompt">&gt;</span> 全体の配色をもう少し温かみのある感じにして</pre></div>
+  <p>修正のたびにブラウザをリロード（<code>⌘ + R</code>）すると、変更が反映されます。<strong>納得いくまで何度でも調整できます。</strong></p>
+  <div class="callout success"><div class="callout-title">✅ Milestone 2 完了チェック</div><p>・自分の情報が載ったポートフォリオサイトがブラウザに表示されている<br>・最低1回は修正の指示を出して、反映された<br>・「日本語で言うだけでサイトが変わる」感覚を掴んだ</p></div>
+</div></section>
+
+<div class="divider"></div>
+<section id="milestone-3"><div class="container">
+  <div class="milestone-header m3 fade-in"><div class="ms-label">Milestone 3</div><h2>応用：デザインと中身をカスタマイズ</h2><div class="ms-time">⏱ 約 20分</div></div>
+  <p>基本のサイトが完成したら、ここからは自由時間です。自分だけのサイトに仕上げていきましょう。</p>
+
+  <h3>カスタマイズアイデア集</h3>
+  <div class="idea-grid">
+    <div class="idea-card">
+      <div class="idea-label">Idea A</div>
+      <h4>好きなデザインテイストに変更する</h4>
+      <p>参考にしたいサイトの雰囲気を伝えてみましょう。</p>
+      <div class="code-block" style="margin-bottom:0"><div class="code-header"><span class="code-lang">指示例</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre><span class="prompt">&gt;</span> 全体をAppleのサイトのようなミニマルで洗練された雰囲気にして。余白を多めに取って、フォントもスッキリさせて</pre></div>
+    </div>
+    <div class="idea-card">
+      <div class="idea-label">Idea B</div>
+      <h4>セクションを追加する</h4>
+      <p>ブログ一覧、趣味、タイムライン（経歴）など新しいセクションを足してみましょう。</p>
+      <div class="code-block" style="margin-bottom:0"><div class="code-header"><span class="code-lang">指示例</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre><span class="prompt">&gt;</span> 「経歴」セクションを追加して。タイムライン形式で表示して。
+内容:
+- 2020年: ○○大学卒業
+- 2020年: △△株式会社 入社
+- 2022年: マーケティング部に異動
+- 2024年: チームリーダーに昇格</pre></div>
+    </div>
+    <div class="idea-card">
+      <div class="idea-label">Idea C</div>
+      <h4>インタラクションを追加する</h4>
+      <p>ホバーエフェクトやスクロールアニメーションを追加できます。</p>
+      <div class="code-block" style="margin-bottom:0"><div class="code-header"><span class="code-lang">指示例</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre><span class="prompt">&gt;</span> スキルのカードにホバーすると少し浮き上がるアニメーションを付けて。スクロールしたらセクションがふわっと表示されるようにして</pre></div>
+    </div>
+    <div class="idea-card">
+      <div class="idea-label">Idea D</div>
+      <h4>プロフィール写真を追加する</h4>
+      <p>画像ファイルをフォルダに入れて、サイトに表示してもらいましょう。</p>
+      <div class="code-block" style="margin-bottom:0"><div class="code-header"><span class="code-lang">指示例</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre><span class="prompt">&gt;</span> このフォルダに photo.jpg という画像があります。ヒーローセクションの右側に丸くトリミングして表示して</pre></div>
+    </div>
+  </div>
+  <div class="callout tip"><div class="callout-title">💡 うまくいかないときのコツ</div><p>指示はできるだけ具体的に。「おしゃれにして」よりも「背景を黒にして、アクセントカラーをオレンジにして、フォントはゴシック系で」の方が思い通りの結果になります。</p></div>
+  <div class="callout success"><div class="callout-title">✅ Milestone 3 完了 — ワークショップ修了！</div><p>・自分なりのカスタマイズを最低1つ加えた<br>・「日本語の指示＝Webデザイン」という感覚が掴めた<br>・自分だけのポートフォリオサイトが完成した！</p></div>
+</div></section>
+
+<div class="divider"></div>
+<section id="troubleshooting"><div class="container">
+  <h3 style="margin-top:0">困ったときは</h3>
+  <details><summary>「command not found: node」と出る</summary><p>Node.js がインストールされていません。ターミナルを一度閉じて開き直し、再度 <code>node --version</code> を試してください。ダメなら Node.js 公式サイトからインストーラーで再インストールしましょう。</p></details>
+  <details><summary>「command not found: claude」と出る</summary><p><code>npm install -g @anthropic-ai/claude-code</code> を再度実行してください。npm 自体が使えない場合は Node.js のインストールから確認しましょう。</p></details>
+  <details><summary>ブラウザで開いてもページが真っ白</summary><p>HTML にエラーがある可能性があります。Claude Code に「ブラウザで開いたら真っ白だった。HTMLのエラーを確認して修正して」と伝えましょう。自動で修正してくれます。</p></details>
+  <details><summary>Claude Code がフリーズしたように見える</summary><p>大きな処理中は時間がかかることがあります。1〜2分待ってみてください。それでもダメなら <code>Ctrl + C</code> で中止し、もう一度指示を出しましょう。</p></details>
+  <details><summary>デザインが思い通りにならない</summary><p>「もっと具体的に」指示を出してみてください。色コードやサイズを指定すると正確になります。参考にしたいサイトのURLを貼って「この雰囲気を参考にして」と伝えるのも有効です。</p></details>
+  <details><summary>何を指示していいかわからなくなった</summary><p>「今のサイトの改善点を3つ提案して」と聞いてみましょう。Claude Code がデザインや構成の改善案を出してくれます。</p></details>
+</div></section>
+
+<div class="divider"></div>
+<section id="next-steps"><div class="container">
+  <h3 style="margin-top:0">完成したサイトを公開するには</h3>
+  <p>作ったポートフォリオサイトはあなたの Mac 上にある <code>index.html</code> ファイルです。インターネットに公開する方法はいくつかあります。</p>
+  <div class="idea-grid">
+    <div class="idea-card"><div class="idea-label">おすすめ</div><h4>GitHub Pages（無料）</h4><p>GitHub アカウントを作ってファイルをアップロードするだけで公開できます。Claude Code に「このサイトを GitHub Pages で公開する手順を教えて」と聞けば、手順を案内してくれます。</p></div>
+    <div class="idea-card"><div class="idea-label">かんたん</div><h4>Netlify Drop（無料）</h4><p>netlify.com/drop にアクセスし、フォルダをドラッグ＆ドロップするだけで公開できます。最も簡単な方法です。</p></div>
+  </div>
+
+  <h3>次のステップ</h3>
+  <p>ワークショップおつかれさまでした！</p>
+  <div class="step-list">
+    <div class="step-item"><div class="step-dot"></div><p><strong>サイトの継続改善：</strong>「ブログセクション追加して」「お問い合わせフォーム付けて」など機能を足していく</p></div>
+    <div class="step-item"><div class="step-dot"></div><p><strong>別のサイトを作る：</strong>クライアント向けLPやチーム紹介ページなど業務で使えるサイトに挑戦</p></div>
+    <div class="step-item"><div class="step-dot"></div><p><strong>業務の自動化：</strong>CSV整理、レポート自動作成、メールテンプレート生成など Web 以外にも応用</p></div>
+  </div>
+
+  <h3>より良い指示を出すコツ</h3>
+  <table class="compare-table">
+    <thead><tr><th>ポイント</th><th>❌ 悪い例</th><th>✅ 良い例</th></tr></thead>
+    <tbody>
+      <tr><td>具体的に</td><td>おしゃれにして</td><td>背景を黒、アクセントをオレンジ、余白多めに</td></tr>
+      <tr><td>完成イメージ</td><td>いい感じのサイト</td><td>Apple.com のようなミニマルなデザインで</td></tr>
+      <tr><td>段階的に</td><td>完璧なサイトを一発で</td><td>まず基本を作って → 次にアニメーション追加して</td></tr>
+      <tr><td>エラー対応</td><td>動かない</td><td>この部分が崩れてる：[スクショ/説明]</td></tr>
+    </tbody>
+  </table>
+
+  <h3>参考リンク</h3>
+  <div class="step-list">
+    <div class="step-item"><div class="step-dot"></div><p><strong>Claude Code 公式ドキュメント</strong> — https://docs.anthropic.com/en/docs/claude-code</p></div>
+    <div class="step-item"><div class="step-dot"></div><p><strong>Claude チャット</strong> — https://claude.ai</p></div>
+    <div class="step-item"><div class="step-dot"></div><p><strong>GitHub Pages ガイド</strong> — https://docs.github.com/ja/pages</p></div>
+    <div class="step-item"><div class="step-dot"></div><p><strong>Netlify Drop</strong> — https://app.netlify.com/drop</p></div>
+  </div>
+</div></section>
+
+<div class="divider"></div>
+<footer>
+  <p class="closing">「作りたいもの」を言葉にできれば、それが技術力になる時代。</p>
+  <p class="closing-sub">今日の経験を活かして、どんどんできることを広げていきましょう！</p>
+</footer>
+
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
