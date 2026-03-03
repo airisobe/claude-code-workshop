@@ -311,24 +311,25 @@ footer .closing-sub { font-weight: 300; color: var(--c-text-muted); font-size: 1
 
   <h3>0-5. 最初の指示：フォルダ構成を作ってもらう</h3>
   <p>さっそく Cowork に最初の仕事を頼みましょう。以下をコピーして Cowork に貼り付けてください。</p>
-  <div class="prompt-block"><div class="prompt-header"><span class="prompt-lang">Cowork に入力</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre>このフォルダの中に、以下のサブフォルダを作って。
+  <div class="prompt-block"><div class="prompt-header"><span class="prompt-lang">Cowork に入力</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre>このフォルダの中に、以下の3つのサブフォルダを作って。
 
-- portfolio （今日作るポートフォリオサイト用）
-- es-draft  （ESの下書き用）
-- research  （リサーチ・調べもの用）
-- notes     （メモ・アイデア整理用）</pre></div>
+- context   （私の自己紹介や好みなど、あなたに知っておいてほしい情報を置く場所）
+- projects  （進行中のプロジェクトを入れる場所）
+- outputs   （完成した成果物を保存する場所）</pre></div>
   <p>Cowork がフォルダを作成します。許可を求められたら<strong>許可してください</strong>。</p>
-  <p>できたら、Finder やエクスプローラーで <strong>Claude-Workspace</strong> を開いてみてください。4つのフォルダが実際にできているはずです。<strong>これが「AI に働いてもらう」ということです。</strong></p>
+  <p>できたら、Finder やエクスプローラーで <strong>Claude-Workspace</strong> を開いてみてください。3つのフォルダが実際にできているはずです。<strong>これが「AI に働いてもらう」ということです。</strong></p>
 
   <div class="prompt-block"><div class="prompt-header"><span class="prompt-lang">完成イメージ</span></div><pre>Claude-Workspace/
-  ├── portfolio/       ← 今日作るポートフォリオサイト
-  ├── es-draft/        ← ES の下書き（今後使う）
-  ├── research/        ← リサーチ・調べもの
-  └── notes/           ← メモ・アイデア整理</pre></div>
+  ├── context/     ← 自分の情報を入れておく場所
+  ├── projects/    ← 進行中のプロジェクト（今日のポートフォリオもここ）
+  └── outputs/     ← 完成した成果物の保存先</pre></div>
 
-  <div class="callout tip"><div class="callout-title">💡 なぜフォルダ設計が大事なのか</div><p>Cowork は指定したフォルダの中しか見えません。逆に言えば、<strong>フォルダ＝ Cowork に渡す仕事の範囲</strong>。プロジェクトごとにフォルダを分けておけば、情報がごちゃ混ぜにならず、Cowork の精度も上がります。今後「ES 作って」「リサーチして」と別の仕事を頼むときも、フォルダを切り替えるだけで OK です。</p></div>
+  <div class="callout tip"><div class="callout-title">💡 なぜこの3つなのか</div>
+    <p><strong>context/</strong> がこの構成の肝です。ここに自己紹介やプロフィール情報を置いておくと、Cowork は仕事を頼まれるたびにこのフォルダを読みに行けるので、<strong>「私のことを知っている部下」</strong>として働いてくれます。毎回「私は○○で、仕事は○○で…」と説明し直す必要がなくなります。</p>
+    <p><strong>projects/</strong> にはプロジェクトごとのサブフォルダを作っていきます。今日のポートフォリオもここに入ります。プロジェクトが増えても構造を変える必要がありません。</p>
+    <p><strong>outputs/</strong> は「これは完成品」とわかるものだけ置く場所。作業中のファイルと完成品が混ざらないので管理が楽になります。</p></div>
 
-  <div class="callout success"><div class="callout-title">✅ Milestone 0 完了チェック</div><p>・Claude デスクトップアプリが開いている<br>・自分のアカウントでログインできている<br>・「Cowork」タブに切り替わっている<br>・Cowork にフォルダ作成を指示して、実際に4つのフォルダができた<br>→ <strong>おめでとうございます！これが初めての「AI に働いてもらう」体験です</strong></p></div>
+  <div class="callout success"><div class="callout-title">✅ Milestone 0 完了チェック</div><p>・Claude デスクトップアプリが開いている<br>・自分のアカウントでログインできている<br>・「Cowork」タブに切り替わっている<br>・Cowork にフォルダ作成を指示して、実際に3つのフォルダができた<br>→ <strong>おめでとうございます！これが初めての「AI に働いてもらう」体験です</strong></p></div>
 </div></section>
 
 <div class="divider"></div>
@@ -336,10 +337,12 @@ footer .closing-sub { font-weight: 300; color: var(--c-text-muted); font-size: 1
   <div class="milestone-header m1 fade-in"><div class="ms-label">Milestone 1</div><h2>はじめの一歩：Cowork でサイトを作る準備</h2><div class="ms-time">⏱ 約 10分</div></div>
   <p>Milestone 0 で Cowork に初めて仕事を頼みました。ここからは<strong>ポートフォリオサイトの制作</strong>に入っていきます。</p>
 
-  <h3>1-1. 作業フォルダを portfolio に切り替える</h3>
-  <p>今 Cowork は「Claude-Workspace」全体を見ている状態です。ポートフォリオサイトの作業に集中するために、フォルダを切り替えましょう。</p>
+  <h3>1-1. projects フォルダ内にポートフォリオ用フォルダを作る</h3>
+  <p>今日のポートフォリオサイトは <strong>projects/</strong> の中に作ります。Cowork に頼みましょう。</p>
+  <div class="prompt-block"><div class="prompt-header"><span class="prompt-lang">Cowork に入力</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre>projects フォルダの中に「portfolio」というサブフォルダを作って</pre></div>
+  <p>できたら、フォルダを切り替えます。</p>
   <div class="ui-step"><div class="ui-num">1</div><p>Cowork 画面の上部にあるフォルダ名をクリック</p></div>
-  <div class="ui-step"><div class="ui-num">2</div><p><strong>「Claude-Workspace」→「portfolio」</strong>フォルダを選択し直す</p></div>
+  <div class="ui-step"><div class="ui-num">2</div><p><strong>「Claude-Workspace」→「projects」→「portfolio」</strong>フォルダを選択し直す</p></div>
 
   <h3>1-2. ウォーミングアップ</h3>
   <p>Cowork の入力欄に、日本語で話しかけてみましょう。まずは簡単なお願いから。</p>
@@ -352,7 +355,7 @@ footer .closing-sub { font-weight: 300; color: var(--c-text-muted); font-size: 1
   <p>Cowork に頼んで、作ったファイルをブラウザで開きましょう。</p>
   <div class="prompt-block"><div class="prompt-header"><span class="prompt-lang">Cowork に入力</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre><span class="prompt">&gt;</span> 今作ったファイルをブラウザで開いて</pre></div>
   <p>ブラウザに「こんにちは、私のサイトです！」と表示されたら成功です！<strong>これがあなたの最初の Web ページです。</strong></p>
-  <p>もし Cowork がブラウザで開けなかった場合は、「Claude-Workspace/portfolio」フォルダを開いて、<strong>hello.html をダブルクリック</strong>しても OK です。</p>
+  <p>もし Cowork がブラウザで開けなかった場合は、「Claude-Workspace/projects/portfolio」フォルダを開いて、<strong>hello.html をダブルクリック</strong>しても OK です。</p>
 
   <div class="callout info"><div class="callout-title">ℹ️ いま体験したのが「相談相手」と「部下」の違い</div><p>Chat の Claude に同じことを頼むと「こういうコードを書いてください」とコードを<strong>見せてくれるだけ</strong>。コピペして保存するのは自分。Cowork は<strong>実際にファイルを作って、フォルダに保存してくれる</strong>。頼んだら完成品が返ってくる——これが「質問する AI」と「働いてくれる AI」の違いです。</p></div>
 
@@ -406,7 +409,7 @@ footer .closing-sub { font-weight: 300; color: var(--c-text-muted); font-size: 1
   <h3>2-3. ブラウザで確認する</h3>
   <div class="prompt-block"><div class="prompt-header"><span class="prompt-lang">Cowork に入力</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre><span class="prompt">&gt;</span> ブラウザで開いて</pre></div>
   <p><strong>自分の名前やプロフィールが載ったポートフォリオサイト</strong>がブラウザに表示されるはずです！</p>
-  <p>ブラウザで開けない場合は、「Claude-Workspace/portfolio」フォルダにある <strong>index.html をダブルクリック</strong>してください。</p>
+  <p>ブラウザで開けない場合は、「Claude-Workspace/projects/portfolio」フォルダにある <strong>index.html をダブルクリック</strong>してください。</p>
 
   <h3>2-4. 気になるところを直す</h3>
   <p>最初の出力を見て「もっとこうしたい」と思ったら、そのまま日本語で伝えましょう。これが Cowork の真骨頂です。</p>
@@ -463,8 +466,8 @@ footer .closing-sub { font-weight: 300; color: var(--c-text-muted); font-size: 1
 <section id="troubleshooting"><div class="container">
   <h3 style="margin-top:0">困ったときは</h3>
   <details><summary>Cowork タブが表示されない</summary><p>Claude デスクトップアプリが最新版であることを確認してください。アプリを再起動するか、claude.ai/download から最新版をダウンロードし直してみましょう。また、Cowork は Pro プラン以上でないと使えません。</p></details>
-  <details><summary>「フォルダを選択してください」と出るが選べない</summary><p>ユーザーフォルダ（自分の名前のフォルダ）に「Claude-Workspace」フォルダを手動で作っておく必要があります。中のサブフォルダ（portfolio 等）は Cowork に作ってもらうので、まずは空の「Claude-Workspace」だけ作ってください。</p></details>
-  <details><summary>ファイルが作られたはずだがフォルダに見つからない</summary><p>Cowork が作業するフォルダと「Claude-Workspace/portfolio」が正しくリンクされているか確認しましょう。Cowork 画面の上部にフォルダのパスが表示されています。</p></details>
+  <details><summary>「フォルダを選択してください」と出るが選べない</summary><p>ユーザーフォルダ（自分の名前のフォルダ）に「Claude-Workspace」フォルダを手動で作っておく必要があります。中のサブフォルダは Cowork に作ってもらうので、まずは空の「Claude-Workspace」だけ作ってください。</p></details>
+  <details><summary>ファイルが作られたはずだがフォルダに見つからない</summary><p>Cowork が作業するフォルダと「Claude-Workspace/projects/portfolio」が正しくリンクされているか確認しましょう。Cowork 画面の上部にフォルダのパスが表示されています。</p></details>
   <details><summary>ブラウザで開いてもページが真っ白</summary><p>HTML にエラーがある可能性があります。Cowork に「ブラウザで開いたら真っ白だった。HTMLのエラーを確認して修正して」と伝えましょう。自動で修正してくれます。</p></details>
   <details><summary>Cowork の応答が遅い・止まったように見える</summary><p>大きな処理中は時間がかかることがあります。1〜2分待ってみてください。それでもダメなら新しいセッションを開始（左上の「＋」ボタン）して、同じフォルダを選び直しましょう。</p></details>
   <details><summary>デザインが思い通りにならない</summary><p>「もっと具体的に」指示を出してみてください。色コードやサイズを指定すると正確になります。参考にしたいサイトのURLを貼って「この雰囲気を参考にして」と伝えるのも有効です。</p></details>
