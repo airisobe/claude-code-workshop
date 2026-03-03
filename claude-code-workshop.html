@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Claude Code 体験ワークショップ｜自分のポートフォリオサイトを作ろう</title>
+<title>Claude Cowork 体験ワークショップ｜自分のポートフォリオサイトを作ろう</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+JP:wght@300;400;500;700;900&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -91,15 +91,15 @@ h3:first-child { margin-top: 0; }
 p { color: var(--c-text-dim); margin-bottom: 16px; line-height: 1.9; }
 p strong, p b { color: var(--c-text); font-weight: 500; }
 
-.code-block { position: relative; margin: 16px 0 24px; background: var(--c-bg-code); border: 1px solid var(--c-border-subtle); border-radius: var(--radius); overflow: hidden; }
-.code-block .code-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; border-bottom: 1px solid var(--c-border-subtle); background: rgba(255,255,255,0.02); }
-.code-block .code-lang { font-family: var(--font-mono); font-size: 11px; color: var(--c-text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
-.code-block .copy-btn { background: none; border: 1px solid var(--c-border); border-radius: 6px; padding: 4px 12px; font-family: var(--font-mono); font-size: 11px; color: var(--c-text-dim); cursor: pointer; transition: all 0.2s; }
-.code-block .copy-btn:hover { background: var(--c-surface); color: var(--c-text); border-color: var(--c-text-muted); }
-.code-block .copy-btn.copied { color: var(--c-green); border-color: var(--c-green); }
-.code-block pre { padding: 20px 24px; overflow-x: auto; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.7; color: #c8c8d8; white-space: pre-wrap; word-wrap: break-word; }
-.code-block pre .comment { color: #5a5a70; }
-.code-block pre .prompt { color: var(--c-accent); }
+.prompt-block { position: relative; margin: 16px 0 24px; background: var(--c-bg-code); border: 1px solid var(--c-border-subtle); border-radius: var(--radius); overflow: hidden; }
+.prompt-block .prompt-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; border-bottom: 1px solid var(--c-border-subtle); background: rgba(255,255,255,0.02); }
+.prompt-block .prompt-lang { font-family: var(--font-mono); font-size: 11px; color: var(--c-text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+.prompt-block .copy-btn { background: none; border: 1px solid var(--c-border); border-radius: 6px; padding: 4px 12px; font-family: var(--font-mono); font-size: 11px; color: var(--c-text-dim); cursor: pointer; transition: all 0.2s; }
+.prompt-block .copy-btn:hover { background: var(--c-surface); color: var(--c-text); border-color: var(--c-text-muted); }
+.prompt-block .copy-btn.copied { color: var(--c-green); border-color: var(--c-green); }
+.prompt-block pre { padding: 20px 24px; overflow-x: auto; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.7; color: #c8c8d8; white-space: pre-wrap; word-wrap: break-word; }
+.prompt-block pre .comment { color: #5a5a70; }
+.prompt-block pre .prompt { color: var(--c-accent); }
 code { font-family: var(--font-mono); font-size: 13px; background: var(--c-surface); padding: 2px 8px; border-radius: 4px; color: var(--c-blue); }
 
 .callout { padding: 20px 24px; border-radius: var(--radius); margin: 24px 0; border: 1px solid; }
@@ -153,6 +153,11 @@ footer .closing-sub { font-weight: 300; color: var(--c-text-muted); font-size: 1
 .fade-in { opacity: 0; transform: translateY(16px); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease); }
 .fade-in.visible { opacity: 1; transform: translateY(0); }
 
+.ui-step { display: flex; align-items: flex-start; gap: 16px; padding: 16px 20px; background: var(--c-bg-card); border: 1px solid var(--c-border); border-radius: var(--radius); margin-bottom: 10px; }
+.ui-step .ui-num { font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--c-accent); background: rgba(255,107,74,0.12); width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+.ui-step p { margin: 0; font-size: 14px; line-height: 1.8; }
+.ui-step p strong { color: var(--c-text); font-weight: 500; }
+
 @media (max-width: 640px) {
   .hero-cards { grid-template-columns: 1fr; max-width: 280px; }
   .hero { padding: 100px 24px 60px; }
@@ -167,119 +172,191 @@ footer .closing-sub { font-weight: 300; color: var(--c-text-muted); font-size: 1
 <body>
 
 <nav><div class="nav-inner">
-  <div class="nav-logo"><span>Claude Code</span> Workshop</div>
+  <div class="nav-logo"><span>Cowork</span> Workshop</div>
   <div class="nav-links">
     <a href="#milestone-0">準備</a><a href="#milestone-1">基本</a><a href="#milestone-2">本番</a><a href="#milestone-3">応用</a><a href="#troubleshooting">FAQ</a>
   </div>
 </div></nav>
 
 <header class="hero">
-  <div class="hero-badge"><span class="dot"></span>Non-Engineer Workshop</div>
-  <h1><span class="accent">Claude Code</span>で<br>ポートフォリオサイトを作ろう</h1>
-  <p class="hero-sub">プログラミング経験ゼロでも大丈夫。<br>日本語で話しかけるだけで、自分だけのWebサイトが完成します。</p>
+  <div class="hero-badge"><span class="dot"></span>For AI Beginners</div>
+  <h1><span class="accent">Claude Cowork</span>で<br>ポートフォリオサイトを作ろう</h1>
+  <p class="hero-sub">Claude をまだ活用できていない人、触ったことがない人のための<br>「まず手を動かす」ワークショップガイド</p>
   <div class="hero-cards">
     <div class="hero-card"><span class="icon">⏱</span><div class="label">所要時間</div><div class="value">約 1.5 〜 2h</div></div>
-    <div class="hero-card"><span class="icon">💻</span><div class="label">対象環境</div><div class="value">Mac</div></div>
+    <div class="hero-card"><span class="icon">💻</span><div class="label">対象環境</div><div class="value">Mac / Win</div></div>
     <div class="hero-card"><span class="icon">🎯</span><div class="label">完成物</div><div class="value">自分のサイト</div></div>
   </div>
 </header>
 
 <div class="divider"></div>
+<section><div class="container">
+  <h3 style="margin-top:0">このガイドについて</h3>
+
+  <div style="display:flex;flex-direction:column;gap:16px;margin:24px 0">
+    <div class="ui-step" style="border-color:rgba(255,107,74,0.3);background:rgba(255,107,74,0.05)">
+      <div class="ui-num">?</div>
+      <div>
+        <p style="margin:0"><strong style="color:var(--c-accent);font-size:14px">誰のためのガイドか</strong></p>
+        <p style="margin:4px 0 0;font-size:13px;color:var(--c-text-dim)">Claude を<strong>まだ使ったことがない人</strong>、使ったことはあるけど<strong>「チャットで質問するだけ」で止まっている人</strong>。プログラミング経験は一切不要です。</p>
+      </div>
+    </div>
+    <div class="ui-step" style="border-color:rgba(255,107,74,0.3);background:rgba(255,107,74,0.05)">
+      <div class="ui-num">!</div>
+      <div>
+        <p style="margin:0"><strong style="color:var(--c-accent);font-size:14px">なぜ「今」やるべきなのか</strong></p>
+        <p style="margin:4px 0 0;font-size:13px;color:var(--c-text-dim)">AI に「質問する」だけの時代は終わりつつあります。今は AI が<strong>実際にファイルを作り、作業を実行してくれる時代</strong>に入っています。この変化に今触れている人と、1年後に触り始める人とでは、取り返しのつかない差が生まれます。</p>
+      </div>
+    </div>
+    <div class="ui-step" style="border-color:rgba(255,107,74,0.3);background:rgba(255,107,74,0.05)">
+      <div class="ui-num">→</div>
+      <div>
+        <p style="margin:0"><strong style="color:var(--c-accent);font-size:14px">読み終えたら何が得られるか</strong></p>
+        <p style="margin:4px 0 0;font-size:13px;color:var(--c-text-dim)">あなたの名前・経歴・スキルが載った<strong>本物のポートフォリオサイト</strong>が手元に完成しています。そしてそれ以上に大事なのは、<strong>「日本語で指示を出すだけで AI が働いてくれる」という感覚</strong>が自分の中にインストールされること。次に何を AI に頼めばいいか、自分で思いつけるようになります。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout tip">
+    <div class="callout-title">💡 このガイドの設計思想</div>
+    <p>「まず情報をたくさんインプットしてから、やりたいことを探す」——このアプローチは取りません。<strong>先に手を動かすから、見えてくるものがある。</strong>触ってみて初めて「次はこれができそう」「これも頼めるのでは」という"問い"が生まれます。このガイドは、最短距離でその体験にたどり着くために設計しています。</p>
+  </div>
+</div></section>
+
+<div class="divider"></div>
 <section class="toc"><div class="container">
   <h2>Timeline</h2>
   <div class="timeline">
-    <a class="timeline-item" href="#milestone-0"><span class="time">0:00</span><span class="title">Milestone 0 — 事前準備：環境構築</span><span class="duration">15 min</span></a>
-    <a class="timeline-item" href="#milestone-1"><span class="time">0:15</span><span class="title">Milestone 1 — はじめの一歩：Claude Code と会話する</span><span class="duration">10 min</span></a>
-    <a class="timeline-item" href="#milestone-2"><span class="time">0:25</span><span class="title">Milestone 2 — 本番：ポートフォリオサイトを作る</span><span class="duration">40 min</span></a>
-    <a class="timeline-item" href="#milestone-3"><span class="time">1:05</span><span class="title">Milestone 3 — 応用：デザインと中身をカスタマイズ</span><span class="duration">20 min</span></a>
-    <a class="timeline-item" href="#next-steps"><span class="time">1:25</span><span class="title">完了！公開方法＆次のステップ</span><span class="duration">—</span></a>
+    <a class="timeline-item" href="#milestone-0"><span class="time">0:00</span><span class="title">Milestone 0 — 事前準備：Cowork を使えるようにする</span><span class="duration">10 min</span></a>
+    <a class="timeline-item" href="#milestone-1"><span class="time">0:10</span><span class="title">Milestone 1 — はじめの一歩：Cowork でサイトを作る準備</span><span class="duration">10 min</span></a>
+    <a class="timeline-item" href="#milestone-2"><span class="time">0:20</span><span class="title">Milestone 2 — 本番：ポートフォリオサイトを作る</span><span class="duration">40 min</span></a>
+    <a class="timeline-item" href="#milestone-3"><span class="time">1:00</span><span class="title">Milestone 3 — 応用：デザインと中身をカスタマイズ</span><span class="duration">20 min</span></a>
+    <a class="timeline-item" href="#next-steps"><span class="time">1:20</span><span class="title">完了！公開方法＆次のステップ</span><span class="duration">—</span></a>
   </div>
 </div></section>
 
 <div class="divider"></div>
 <section><div class="container">
-  <h3>Claude Code とは？</h3>
-  <p>Claude Code は、Anthropic が提供する<strong>コマンドライン型のAIアシスタント</strong>です。普段使っている Claude（チャット画面）とは違い、<strong>ターミナル</strong>の中で直接動きます。</p>
-  <p>最大の特徴は、会話するだけで<strong>ファイルを作成・編集したり、コマンドを実行</strong>できること。「こういうサイト作って」と日本語で頼むだけで、HTML・CSS・JavaScript を書いて本当に動く Web サイトを作ってくれます。</p>
-  <h3>今日のゴール</h3>
-  <p>このワークショップが終わる頃には、<strong>あなた自身のポートフォリオサイト</strong>が手元で完成しています。名前、自己紹介、スキル、実績などを載せた、ブラウザで見られる本物の Web サイトです。</p>
+  <h3>そもそも Claude（クロード）って何？</h3>
+  <p>Claude は、Anthropic（アンソロピック）というアメリカの会社が作った<strong>AIアシスタント</strong>です。ChatGPT と同じジャンルのサービスで、日本語で話しかけるといろんなことを手伝ってくれます。</p>
+  <div class="callout info">
+    <div class="callout-title">ℹ️ ChatGPT と何が違うの？</div>
+    <p>車に例えると、トヨタとホンダの違いのようなもの。どちらも優秀な AI ですが、Claude は<strong>「嘘をつきにくい」「長い文章に強い」「安全性を重視している」</strong>という特徴があります。そして今回使う「Cowork」という仕組みがとても強力です。</p>
+  </div>
+
+  <h3>Claude には「3つの顔」がある</h3>
+  <p>Claude にはモードが3つあります。これを理解しておくと、今日やることがスッキリわかります。</p>
+
+  <div style="display:flex;flex-direction:column;gap:12px;margin:24px 0">
+    <div class="ui-step" style="border-color:rgba(74,158,255,0.3);background:rgba(74,158,255,0.05)">
+      <div class="ui-num" style="background:rgba(74,158,255,0.15);color:var(--c-blue)">1</div>
+      <div>
+        <p style="margin:0"><strong style="color:var(--c-blue);font-size:15px">Claude チャット ＝ 優秀な「相談相手」</strong></p>
+        <p style="margin:4px 0 0;font-size:13px;color:var(--c-text-dim)">ブラウザやアプリで使える会話モード。質問すると答えてくれる。ただし<strong>最後の作業は自分でやる必要がある</strong>。「こういうコードを書いてください」と教えてくれるけど、実際にファイルを作るのは自分。ChatGPT と同じ立ち位置。</p>
+      </div>
+    </div>
+    <div class="ui-step" style="border-color:rgba(167,139,250,0.3);background:rgba(167,139,250,0.05)">
+      <div class="ui-num" style="background:rgba(167,139,250,0.15);color:var(--c-purple)">2</div>
+      <div>
+        <p style="margin:0"><strong style="color:var(--c-purple);font-size:15px">Claude Code ＝ 頭脳に「手足」を与えたもの</strong></p>
+        <p style="margin:4px 0 0;font-size:13px;color:var(--c-text-dim)">ターミナル（黒い画面）で動く、<strong>最も高機能なモード</strong>。ファイル操作、ツール連携、複数のAIを同時に指揮する——なんでもできる。ただしターミナルを使うので、エンジニア向け。名前に「Code」とあるがコーディング以外にも使える万能ツール。</p>
+      </div>
+    </div>
+    <div class="ui-step" style="border-color:rgba(74,232,138,0.3);background:rgba(74,232,138,0.05)">
+      <div class="ui-num" style="background:rgba(74,232,138,0.15);color:var(--c-green)">3</div>
+      <div>
+        <p style="margin:0"><strong style="color:var(--c-green);font-size:15px">Cowork ＝ Claude Code の「簡易版」</strong></p>
+        <p style="margin:4px 0 0;font-size:13px;color:var(--c-text-dim)">Claude デスクトップアプリの中にある作業モード。Claude Code と同じ仕組みで動いているが、<strong>ターミナル不要で、チャット画面から指示するだけ</strong>で使える。Claude Code ほど高機能ではないが、ファイル作成・編集・整理など日常業務には十分。非エンジニア向けに作られた入口。</p>
+      </div>
+    </div>
+  </div>
+
   <div class="callout tip">
-    <div class="callout-title">💡 ポイント</div>
-    <p>プログラミングの知識は一切不要です。大切なのは「自分のサイトにどんな情報を載せたいか」を考えること。今日は<strong>「日本語で指示を出す力」</strong>がそのまま Web 制作スキルになります。</p>
+    <div class="callout-title">💡 わかりやすく言うと</div>
+    <p>Claude の<strong>「AI モデル」は頭脳</strong>。チャットは<strong>その頭脳と「会話」する窓口</strong>。Claude Code は<strong>その頭脳に「手足」を与えたもの</strong>。そして Cowork は<strong>Claude Code の基本機能をターミナルなしで使える簡易版</strong>。<br>Cowork でできることは Claude Code で全部できる。逆に Claude Code の方が圧倒的に高機能。でも、ターミナルが怖い人にとっては Cowork が最高の入口になる——それが今日使うツールです。</p>
   </div>
 </div></section>
 
 <div class="divider"></div>
 <section id="milestone-0"><div class="container">
-  <div class="milestone-header m0 fade-in"><div class="ms-label">Milestone 0</div><h2>事前準備：環境構築</h2><div class="ms-time">⏱ 約 15分</div></div>
-  <p>まず Claude Code を動かすために必要なソフトウェアをインストールします。ターミナルにコマンドを貼り付けて Enter を押すだけです。</p>
+  <div class="milestone-header m0 fade-in"><div class="ms-label">Milestone 0</div><h2>事前準備：Cowork を使えるようにする</h2><div class="ms-time">⏱ 約 10分</div></div>
+  <p>Cowork を使うための準備は3ステップだけ。ターミナルもプログラミングも不要です。</p>
 
-  <h3>0-1. ターミナルを開く</h3>
-  <p>Mac には「ターミナル」というアプリが最初から入っています。</p>
-  <div class="step-list">
-    <div class="step-item"><div class="step-dot"></div><p><strong>方法A：</strong><code>⌘</code> + <code>スペース</code> で Spotlight を開き、「ターミナル」と入力して Enter</p></div>
-    <div class="step-item"><div class="step-dot"></div><p><strong>方法B：</strong>Finder → アプリケーション → ユーティリティ → ターミナル.app</p></div>
-  </div>
-  <div class="callout tip"><div class="callout-title">💡 ヒント</div><p>黒い（または白い）画面が表示されれば OK です。ここに指示を「貼り付けて Enter」するだけなので安心してください。</p></div>
+  <h3>0-1. Claude デスクトップアプリをインストールする</h3>
+  <div class="ui-step"><div class="ui-num">1</div><p><strong>claude.ai/download</strong> にアクセスする</p></div>
+  <div class="ui-step"><div class="ui-num">2</div><p>お使いのOS（Mac / Windows）に合ったアプリをダウンロード</p></div>
+  <div class="ui-step"><div class="ui-num">3</div><p>ダウンロードしたファイルを開いてインストール（Mac の場合はアプリケーションフォルダにドラッグ）</p></div>
+  <div class="callout info"><div class="callout-title">ℹ️ Windows の場合</div><p>Windows で Cowork を使うには「開発者モード」をオンにする必要があります。<strong>設定 → システム → 開発者向け → 「開発者モード」をオン</strong>にしてください。対応しているのは x64（64ビット版）のみです。</p></div>
 
-  <h3>0-2. Node.js をインストールする</h3>
-  <p>Claude Code を動かすには Node.js（バージョン18以上）が必要です。まず確認しましょう。</p>
-  <div class="code-block"><div class="code-header"><span class="code-lang">Terminal</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre>node --version</pre></div>
-  <p><code>v18.x.x</code> や <code>v20.x.x</code> のように表示されたらインストール済みです。「command not found」と出たら、以下でインストールします。</p>
-  <div class="code-block"><div class="code-header"><span class="code-lang">Terminal — Homebrew 経由</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre><span class="comment"># Homebrew が入っていない場合、まず Homebrew をインストール</span>
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  <h3>0-2. アカウントを用意する</h3>
+  <div class="ui-step"><div class="ui-num">1</div><p><strong>claude.ai</strong> にアクセスし、アカウントを作成する（メールアドレスまたは Google アカウントで登録）</p></div>
+  <div class="ui-step"><div class="ui-num">2</div><p><strong>Pro プラン（月額 $20）</strong>に加入する — Cowork は無料プランでは使えません</p></div>
+  <div class="ui-step"><div class="ui-num">3</div><p>Claude デスクトップアプリを開いて、作成したアカウントでログインする</p></div>
+  <div class="callout info"><div class="callout-title">ℹ️ Pro プランについて</div><p>Cowork を使うには Pro プラン以上が必要です。月額 $20（約 3,000 円）で、Cowork・Research・最新モデルなどすべての機能が使えます。まずは1ヶ月試してみて、合わなければ解約できます。</p></div>
 
-<span class="comment"># Node.js をインストール</span>
-brew install node</pre></div>
-  <p>または Node.js 公式サイト（<strong>https://nodejs.org</strong>）から「LTS」版のインストーラーをダウンロードしてもOKです。</p>
+  <h3>0-3. 作業用フォルダを準備する</h3>
+  <p>Cowork は<strong>フォルダ単位</strong>で仕事をします。指定したフォルダの中身だけを読み書きするので、フォルダの作り方がそのまま仕事の整理になります。</p>
+  <p>まず、Cowork の「ホーム」になるフォルダを1つだけ手動で作ります。</p>
 
-  <h3>0-3. Claude Code をインストールする</h3>
-  <div class="code-block"><div class="code-header"><span class="code-lang">Terminal</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre>npm install -g @anthropic-ai/claude-code</pre></div>
-  <p>インストールが完了したら確認しましょう。</p>
-  <div class="code-block"><div class="code-header"><span class="code-lang">Terminal</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre>claude --version</pre></div>
+  <div class="ui-step"><div class="ui-num">1</div><p>Finder（Mac）またはエクスプローラー（Win）を開き、<strong>自分のユーザーフォルダ</strong>に移動する<br><span style="font-size:12px;color:var(--c-text-muted)">Mac: Finder → 移動 → ホーム ／ Win: <code>C:\Users\自分の名前</code></span></p></div>
+  <div class="ui-step"><div class="ui-num">2</div><p>そこに <strong>「Claude-Workspace」</strong> フォルダを1つだけ新規作成する</p></div>
 
-  <h3>0-4. ログインする</h3>
-  <div class="code-block"><div class="code-header"><span class="code-lang">Terminal</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre>claude</pre></div>
-  <p>ブラウザが自動で開くので、Anthropic アカウントでログインしてください。完了するとターミナルに戻って Claude Code が使えるようになります。</p>
-  <div class="callout success"><div class="callout-title">✅ Milestone 0 完了チェック</div><p>・ターミナルが開いている<br>・<code>node --version</code> でバージョンが表示される<br>・<code>claude --version</code> でバージョンが表示される</p></div>
+  <div class="callout tip"><div class="callout-title">💡 中のフォルダは Cowork に作ってもらいます</div><p>ここで手動で作るのはこの1つだけ。中身のフォルダ構成は、この後 Cowork に指示して作ってもらいます。<strong>それが最初の「AI に働いてもらう」体験</strong>になります。</p></div>
+
+  <h3>0-4. Cowork モードに切り替える</h3>
+  <div class="ui-step"><div class="ui-num">1</div><p>アプリ上部にある<strong>「Chat」「Cowork」</strong>のタブを見つける</p></div>
+  <div class="ui-step"><div class="ui-num">2</div><p><strong>「Cowork」タブ</strong>をクリックして切り替える</p></div>
+  <div class="ui-step"><div class="ui-num">3</div><p>作業用フォルダを選択する画面が出るので、先ほど作った<strong>「Claude-Workspace」</strong>フォルダを選択する</p></div>
+  <div class="callout info"><div class="callout-title">ℹ️ Chat と Cowork の違い</div><p><strong>Chat</strong> は質問に答えてくれる「相談相手」。<strong>Cowork</strong> はファイルを実際に作成・編集してくれる「作業パートナー」です。今日使うのは Cowork の方です。</p></div>
+
+  <h3>0-5. 最初の指示：フォルダ構成を作ってもらう</h3>
+  <p>さっそく Cowork に最初の仕事を頼みましょう。以下をコピーして Cowork に貼り付けてください。</p>
+  <div class="prompt-block"><div class="prompt-header"><span class="prompt-lang">Cowork に入力</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre>このフォルダの中に、以下のサブフォルダを作って。
+
+- portfolio （今日作るポートフォリオサイト用）
+- es-draft  （ESの下書き用）
+- research  （リサーチ・調べもの用）
+- notes     （メモ・アイデア整理用）</pre></div>
+  <p>Cowork がフォルダを作成します。許可を求められたら<strong>許可してください</strong>。</p>
+  <p>できたら、Finder やエクスプローラーで <strong>Claude-Workspace</strong> を開いてみてください。4つのフォルダが実際にできているはずです。<strong>これが「AI に働いてもらう」ということです。</strong></p>
+
+  <div class="prompt-block"><div class="prompt-header"><span class="prompt-lang">完成イメージ</span></div><pre>Claude-Workspace/
+  ├── portfolio/       ← 今日作るポートフォリオサイト
+  ├── es-draft/        ← ES の下書き（今後使う）
+  ├── research/        ← リサーチ・調べもの
+  └── notes/           ← メモ・アイデア整理</pre></div>
+
+  <div class="callout tip"><div class="callout-title">💡 なぜフォルダ設計が大事なのか</div><p>Cowork は指定したフォルダの中しか見えません。逆に言えば、<strong>フォルダ＝ Cowork に渡す仕事の範囲</strong>。プロジェクトごとにフォルダを分けておけば、情報がごちゃ混ぜにならず、Cowork の精度も上がります。今後「ES 作って」「リサーチして」と別の仕事を頼むときも、フォルダを切り替えるだけで OK です。</p></div>
+
+  <div class="callout success"><div class="callout-title">✅ Milestone 0 完了チェック</div><p>・Claude デスクトップアプリが開いている<br>・自分のアカウントでログインできている<br>・「Cowork」タブに切り替わっている<br>・Cowork にフォルダ作成を指示して、実際に4つのフォルダができた<br>→ <strong>おめでとうございます！これが初めての「AI に働いてもらう」体験です</strong></p></div>
 </div></section>
 
 <div class="divider"></div>
 <section id="milestone-1"><div class="container">
-  <div class="milestone-header m1 fade-in"><div class="ms-label">Milestone 1</div><h2>はじめの一歩：Claude Code と会話する</h2><div class="ms-time">⏱ 約 10分</div></div>
-  <p>環境構築おつかれさまでした！ここからが楽しいパートです。まずは Claude Code に慣れましょう。</p>
+  <div class="milestone-header m1 fade-in"><div class="ms-label">Milestone 1</div><h2>はじめの一歩：Cowork でサイトを作る準備</h2><div class="ms-time">⏱ 約 10分</div></div>
+  <p>Milestone 0 で Cowork に初めて仕事を頼みました。ここからは<strong>ポートフォリオサイトの制作</strong>に入っていきます。</p>
 
-  <h3>1-1. 作業フォルダを作って移動する</h3>
-  <div class="code-block"><div class="code-header"><span class="code-lang">Terminal</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre>mkdir ~/my-portfolio
-cd ~/my-portfolio</pre></div>
+  <h3>1-1. 作業フォルダを portfolio に切り替える</h3>
+  <p>今 Cowork は「Claude-Workspace」全体を見ている状態です。ポートフォリオサイトの作業に集中するために、フォルダを切り替えましょう。</p>
+  <div class="ui-step"><div class="ui-num">1</div><p>Cowork 画面の上部にあるフォルダ名をクリック</p></div>
+  <div class="ui-step"><div class="ui-num">2</div><p><strong>「Claude-Workspace」→「portfolio」</strong>フォルダを選択し直す</p></div>
 
-  <h3>1-2. Claude Code を起動する</h3>
-  <div class="code-block"><div class="code-header"><span class="code-lang">Terminal</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre>claude</pre></div>
-  <p>入力待ちの状態になったら、日本語で話しかけてみましょう。</p>
+  <h3>1-2. ウォーミングアップ</h3>
+  <p>Cowork の入力欄に、日本語で話しかけてみましょう。まずは簡単なお願いから。</p>
+  <div class="prompt-block"><div class="prompt-header"><span class="prompt-lang">Cowork に入力</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre><span class="prompt">&gt;</span> このフォルダの中身を教えて</pre></div>
+  <p>まだ空のフォルダなので、「ファイルはありません」と教えてくれるはずです。次に、簡単なファイルを作ってもらいましょう。</p>
+  <div class="prompt-block"><div class="prompt-header"><span class="prompt-lang">Cowork に入力</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre><span class="prompt">&gt;</span> 「hello.html」を作って。中に「こんにちは、私のサイトです！」と大きく表示されるHTMLを書いて</pre></div>
+  <p>Cowork がファイルを作成します。作成の許可を求めてくることがあるので、<strong>許可してください</strong>。</p>
 
-  <h3>1-3. ウォーミングアップ</h3>
-  <p>まずは簡単なお願いをして感覚を掴みます。</p>
-  <div class="code-block"><div class="code-header"><span class="code-lang">Claude Code に入力</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre><span class="prompt">&gt;</span> このフォルダの中身を教えて</pre></div>
-  <p>まだ空のはずです。次に、簡単なファイルを作ってもらいましょう。</p>
-  <div class="code-block"><div class="code-header"><span class="code-lang">Claude Code に入力</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre><span class="prompt">&gt;</span> 「hello.html」を作って。中に「こんにちは、私のサイトです！」と大きく表示されるHTMLを書いて</pre></div>
-  <p>ファイル作成の許可を求めてくるので、<strong>y</strong> を押してください。次に、作ったファイルをブラウザで確認してみましょう。</p>
-  <div class="code-block"><div class="code-header"><span class="code-lang">Claude Code に入力</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre><span class="prompt">&gt;</span> 今作ったファイルをブラウザで開いて</pre></div>
+  <h3>1-3. 作ったファイルをブラウザで見る</h3>
+  <p>Cowork に頼んで、作ったファイルをブラウザで開きましょう。</p>
+  <div class="prompt-block"><div class="prompt-header"><span class="prompt-lang">Cowork に入力</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre><span class="prompt">&gt;</span> 今作ったファイルをブラウザで開いて</pre></div>
   <p>ブラウザに「こんにちは、私のサイトです！」と表示されたら成功です！<strong>これがあなたの最初の Web ページです。</strong></p>
+  <p>もし Cowork がブラウザで開けなかった場合は、「Claude-Workspace/portfolio」フォルダを開いて、<strong>hello.html をダブルクリック</strong>しても OK です。</p>
 
-  <div class="callout info"><div class="callout-title">ℹ️ Chat の Claude との違い</div><p>Claude Code は「ターミナルの中で動く Claude」です。ファイルの作成、コードの実行、ブラウザで開くなど<strong>パソコン上の操作を会話しながら実行</strong>できます。チャットの Claude が「コードを見せる」だけなのに対し、Claude Code は「実際にファイルを作って動かす」ことができます。</p></div>
+  <div class="callout info"><div class="callout-title">ℹ️ いま体験したのが「相談相手」と「部下」の違い</div><p>Chat の Claude に同じことを頼むと「こういうコードを書いてください」とコードを<strong>見せてくれるだけ</strong>。コピペして保存するのは自分。Cowork は<strong>実際にファイルを作って、フォルダに保存してくれる</strong>。頼んだら完成品が返ってくる——これが「質問する AI」と「働いてくれる AI」の違いです。</p></div>
 
-  <h3>1-4. 覚えておくと便利なコマンド</h3>
-  <table>
-    <thead><tr><th>コマンド</th><th>説明</th></tr></thead>
-    <tbody>
-      <tr><td>/help</td><td>ヘルプを表示</td></tr>
-      <tr><td>/clear</td><td>会話履歴をクリア</td></tr>
-      <tr><td>Ctrl + C</td><td>現在の処理を中止</td></tr>
-      <tr><td>/exit</td><td>Claude Code を終了</td></tr>
-      <tr><td>Esc × 2</td><td>入力途中のテキストを破棄</td></tr>
-    </tbody>
-  </table>
-  <div class="callout success"><div class="callout-title">✅ Milestone 1 完了チェック</div><p>・Claude Code で会話ができた<br>・HTML ファイルが作られた<br>・ブラウザで自分のページが表示された</p></div>
+  <div class="callout success"><div class="callout-title">✅ Milestone 1 完了チェック</div><p>・Cowork で会話ができた<br>・HTML ファイルが作られた<br>・ブラウザで自分のページが表示された</p></div>
 </div></section>
 
 <div class="divider"></div>
@@ -288,7 +365,7 @@ cd ~/my-portfolio</pre></div>
   <p>いよいよ本番です！ Milestone 1 で作った hello.html は練習用だったので、ここからは本格的な<strong>自分のポートフォリオサイト</strong>を作っていきます。</p>
 
   <h3>2-1. 自分の情報を整理する（2分）</h3>
-  <p>Claude Code に渡す前に、載せたい内容をざっくり決めておきましょう。メモ帳やノートに書き出してみてください。</p>
+  <p>Cowork に渡す前に、載せたい内容をざっくり決めておきましょう。メモ帳やノートに書き出してみてください。</p>
   <table>
     <thead><tr><th>項目</th><th>例</th></tr></thead>
     <tbody>
@@ -302,9 +379,9 @@ cd ~/my-portfolio</pre></div>
   </table>
   <div class="callout tip"><div class="callout-title">💡 ヒント</div><p>全部埋まらなくても大丈夫！最低限「名前」「肩書き」「自己紹介」があれば形になります。あとから追加・修正できるので、まずは手を動かしましょう。</p></div>
 
-  <h3>2-2. Claude Code にサイトを作ってもらう</h3>
-  <p>以下の指示をコピーし、<strong>★の部分を自分の情報に書き換えて</strong>から Claude Code に貼り付けてください。</p>
-  <div class="code-block"><div class="code-header"><span class="code-lang">Claude Code に入力（★を自分の情報に書き換える）</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre>hello.html は削除して、以下の情報をもとにポートフォリオサイトを作って。
+  <h3>2-2. Cowork にサイトを作ってもらう</h3>
+  <p>以下の指示をコピーし、<strong>★の部分を自分の情報に書き換えて</strong>から Cowork に貼り付けてください。</p>
+  <div class="prompt-block"><div class="prompt-header"><span class="prompt-lang">Cowork に入力（★を自分の情報に書き換える）</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre>hello.html は削除して、以下の情報をもとにポートフォリオサイトを作って。
 ファイル名は index.html で、1ファイルで完結するようにして（CSS/JSも中に書く）。
 
 【私の情報】
@@ -324,19 +401,20 @@ cd ~/my-portfolio</pre></div>
 - スクロールアニメーション付き
 - スマホでもきれいに見える（レスポンシブ対応）
 - セクション: ヒーロー（名前＋肩書き）、自己紹介、スキル、実績、連絡先</pre></div>
-  <p>Enter を押すと Claude Code が作業を開始します。ファイルの作成・削除の許可を求められたら <strong>y</strong> を押してください。1〜2分ほどで完成します。</p>
+  <p>送信すると Cowork が作業を開始します。ファイルの作成・削除の許可を求められたら<strong>許可してください</strong>。1〜2分ほどで完成します。</p>
 
   <h3>2-3. ブラウザで確認する</h3>
-  <div class="code-block"><div class="code-header"><span class="code-lang">Claude Code に入力</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre><span class="prompt">&gt;</span> ブラウザで開いて</pre></div>
+  <div class="prompt-block"><div class="prompt-header"><span class="prompt-lang">Cowork に入力</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre><span class="prompt">&gt;</span> ブラウザで開いて</pre></div>
   <p><strong>自分の名前やプロフィールが載ったポートフォリオサイト</strong>がブラウザに表示されるはずです！</p>
+  <p>ブラウザで開けない場合は、「Claude-Workspace/portfolio」フォルダにある <strong>index.html をダブルクリック</strong>してください。</p>
 
   <h3>2-4. 気になるところを直す</h3>
-  <p>最初の出力を見て「もっとこうしたい」と思ったら、そのまま日本語で伝えましょう。これが Claude Code の真骨頂です。</p>
-  <div class="code-block"><div class="code-header"><span class="code-lang">修正の指示例</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre><span class="prompt">&gt;</span> ヒーローセクションの背景をもっと暗くして、名前をもっと大きくして</pre></div>
-  <div class="code-block"><div class="code-header"><span class="code-lang">修正の指示例</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre><span class="prompt">&gt;</span> スキルのセクションをカード型のレイアウトに変えて</pre></div>
-  <div class="code-block"><div class="code-header"><span class="code-lang">修正の指示例</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre><span class="prompt">&gt;</span> 実績の部分に数字を大きく表示して、インパクトを出して</pre></div>
-  <div class="code-block"><div class="code-header"><span class="code-lang">修正の指示例</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre><span class="prompt">&gt;</span> 全体の配色をもう少し温かみのある感じにして</pre></div>
-  <p>修正のたびにブラウザをリロード（<code>⌘ + R</code>）すると、変更が反映されます。<strong>納得いくまで何度でも調整できます。</strong></p>
+  <p>最初の出力を見て「もっとこうしたい」と思ったら、そのまま日本語で伝えましょう。これが Cowork の真骨頂です。</p>
+  <div class="prompt-block"><div class="prompt-header"><span class="prompt-lang">修正の指示例</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre><span class="prompt">&gt;</span> ヒーローセクションの背景をもっと暗くして、名前をもっと大きくして</pre></div>
+  <div class="prompt-block"><div class="prompt-header"><span class="prompt-lang">修正の指示例</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre><span class="prompt">&gt;</span> スキルのセクションをカード型のレイアウトに変えて</pre></div>
+  <div class="prompt-block"><div class="prompt-header"><span class="prompt-lang">修正の指示例</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre><span class="prompt">&gt;</span> 実績の部分に数字を大きく表示して、インパクトを出して</pre></div>
+  <div class="prompt-block"><div class="prompt-header"><span class="prompt-lang">修正の指示例</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre><span class="prompt">&gt;</span> 全体の配色をもう少し温かみのある感じにして</pre></div>
+  <p>修正のたびにブラウザをリロード（Mac: <code>⌘ + R</code> / Win: <code>F5</code>）すると、変更が反映されます。<strong>納得いくまで何度でも調整できます。</strong></p>
   <div class="callout success"><div class="callout-title">✅ Milestone 2 完了チェック</div><p>・自分の情報が載ったポートフォリオサイトがブラウザに表示されている<br>・最低1回は修正の指示を出して、反映された<br>・「日本語で言うだけでサイトが変わる」感覚を掴んだ</p></div>
 </div></section>
 
@@ -351,13 +429,13 @@ cd ~/my-portfolio</pre></div>
       <div class="idea-label">Idea A</div>
       <h4>好きなデザインテイストに変更する</h4>
       <p>参考にしたいサイトの雰囲気を伝えてみましょう。</p>
-      <div class="code-block" style="margin-bottom:0"><div class="code-header"><span class="code-lang">指示例</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre><span class="prompt">&gt;</span> 全体をAppleのサイトのようなミニマルで洗練された雰囲気にして。余白を多めに取って、フォントもスッキリさせて</pre></div>
+      <div class="prompt-block" style="margin-bottom:0"><div class="prompt-header"><span class="prompt-lang">指示例</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre><span class="prompt">&gt;</span> 全体をAppleのサイトのようなミニマルで洗練された雰囲気にして。余白を多めに取って、フォントもスッキリさせて</pre></div>
     </div>
     <div class="idea-card">
       <div class="idea-label">Idea B</div>
       <h4>セクションを追加する</h4>
       <p>ブログ一覧、趣味、タイムライン（経歴）など新しいセクションを足してみましょう。</p>
-      <div class="code-block" style="margin-bottom:0"><div class="code-header"><span class="code-lang">指示例</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre><span class="prompt">&gt;</span> 「経歴」セクションを追加して。タイムライン形式で表示して。
+      <div class="prompt-block" style="margin-bottom:0"><div class="prompt-header"><span class="prompt-lang">指示例</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre><span class="prompt">&gt;</span> 「経歴」セクションを追加して。タイムライン形式で表示して。
 内容:
 - 2020年: ○○大学卒業
 - 2020年: △△株式会社 入社
@@ -368,13 +446,13 @@ cd ~/my-portfolio</pre></div>
       <div class="idea-label">Idea C</div>
       <h4>インタラクションを追加する</h4>
       <p>ホバーエフェクトやスクロールアニメーションを追加できます。</p>
-      <div class="code-block" style="margin-bottom:0"><div class="code-header"><span class="code-lang">指示例</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre><span class="prompt">&gt;</span> スキルのカードにホバーすると少し浮き上がるアニメーションを付けて。スクロールしたらセクションがふわっと表示されるようにして</pre></div>
+      <div class="prompt-block" style="margin-bottom:0"><div class="prompt-header"><span class="prompt-lang">指示例</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre><span class="prompt">&gt;</span> スキルのカードにホバーすると少し浮き上がるアニメーションを付けて。スクロールしたらセクションがふわっと表示されるようにして</pre></div>
     </div>
     <div class="idea-card">
       <div class="idea-label">Idea D</div>
       <h4>プロフィール写真を追加する</h4>
       <p>画像ファイルをフォルダに入れて、サイトに表示してもらいましょう。</p>
-      <div class="code-block" style="margin-bottom:0"><div class="code-header"><span class="code-lang">指示例</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre><span class="prompt">&gt;</span> このフォルダに photo.jpg という画像があります。ヒーローセクションの右側に丸くトリミングして表示して</pre></div>
+      <div class="prompt-block" style="margin-bottom:0"><div class="prompt-header"><span class="prompt-lang">指示例</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><pre><span class="prompt">&gt;</span> このフォルダに photo.jpg という画像があります。ヒーローセクションの右側に丸くトリミングして表示して</pre></div>
     </div>
   </div>
   <div class="callout tip"><div class="callout-title">💡 うまくいかないときのコツ</div><p>指示はできるだけ具体的に。「おしゃれにして」よりも「背景を黒にして、アクセントカラーをオレンジにして、フォントはゴシック系で」の方が思い通りの結果になります。</p></div>
@@ -384,21 +462,23 @@ cd ~/my-portfolio</pre></div>
 <div class="divider"></div>
 <section id="troubleshooting"><div class="container">
   <h3 style="margin-top:0">困ったときは</h3>
-  <details><summary>「command not found: node」と出る</summary><p>Node.js がインストールされていません。ターミナルを一度閉じて開き直し、再度 <code>node --version</code> を試してください。ダメなら Node.js 公式サイトからインストーラーで再インストールしましょう。</p></details>
-  <details><summary>「command not found: claude」と出る</summary><p><code>npm install -g @anthropic-ai/claude-code</code> を再度実行してください。npm 自体が使えない場合は Node.js のインストールから確認しましょう。</p></details>
-  <details><summary>ブラウザで開いてもページが真っ白</summary><p>HTML にエラーがある可能性があります。Claude Code に「ブラウザで開いたら真っ白だった。HTMLのエラーを確認して修正して」と伝えましょう。自動で修正してくれます。</p></details>
-  <details><summary>Claude Code がフリーズしたように見える</summary><p>大きな処理中は時間がかかることがあります。1〜2分待ってみてください。それでもダメなら <code>Ctrl + C</code> で中止し、もう一度指示を出しましょう。</p></details>
+  <details><summary>Cowork タブが表示されない</summary><p>Claude デスクトップアプリが最新版であることを確認してください。アプリを再起動するか、claude.ai/download から最新版をダウンロードし直してみましょう。また、Cowork は Pro プラン以上でないと使えません。</p></details>
+  <details><summary>「フォルダを選択してください」と出るが選べない</summary><p>ユーザーフォルダ（自分の名前のフォルダ）に「Claude-Workspace」フォルダを手動で作っておく必要があります。中のサブフォルダ（portfolio 等）は Cowork に作ってもらうので、まずは空の「Claude-Workspace」だけ作ってください。</p></details>
+  <details><summary>ファイルが作られたはずだがフォルダに見つからない</summary><p>Cowork が作業するフォルダと「Claude-Workspace/portfolio」が正しくリンクされているか確認しましょう。Cowork 画面の上部にフォルダのパスが表示されています。</p></details>
+  <details><summary>ブラウザで開いてもページが真っ白</summary><p>HTML にエラーがある可能性があります。Cowork に「ブラウザで開いたら真っ白だった。HTMLのエラーを確認して修正して」と伝えましょう。自動で修正してくれます。</p></details>
+  <details><summary>Cowork の応答が遅い・止まったように見える</summary><p>大きな処理中は時間がかかることがあります。1〜2分待ってみてください。それでもダメなら新しいセッションを開始（左上の「＋」ボタン）して、同じフォルダを選び直しましょう。</p></details>
   <details><summary>デザインが思い通りにならない</summary><p>「もっと具体的に」指示を出してみてください。色コードやサイズを指定すると正確になります。参考にしたいサイトのURLを貼って「この雰囲気を参考にして」と伝えるのも有効です。</p></details>
-  <details><summary>何を指示していいかわからなくなった</summary><p>「今のサイトの改善点を3つ提案して」と聞いてみましょう。Claude Code がデザインや構成の改善案を出してくれます。</p></details>
+  <details><summary>何を指示していいかわからなくなった</summary><p>「今のサイトの改善点を3つ提案して」と聞いてみましょう。Cowork がデザインや構成の改善案を出してくれます。</p></details>
+  <details><summary>Windows で Cowork が動かない</summary><p>「開発者モード」がオンになっているか確認してください（設定 → システム → 開発者向け）。また、Windows ARM64 版（Qualcomm チップ搭載PC）には未対応です。x64（64ビット版）のみ対応しています。</p></details>
 </div></section>
 
 <div class="divider"></div>
 <section id="next-steps"><div class="container">
   <h3 style="margin-top:0">完成したサイトを公開するには</h3>
-  <p>作ったポートフォリオサイトはあなたの Mac 上にある <code>index.html</code> ファイルです。インターネットに公開する方法はいくつかあります。</p>
+  <p>作ったポートフォリオサイトはあなたのパソコン上にある <code>index.html</code> ファイルです。インターネットに公開する方法はいくつかあります。</p>
   <div class="idea-grid">
-    <div class="idea-card"><div class="idea-label">おすすめ</div><h4>GitHub Pages（無料）</h4><p>GitHub アカウントを作ってファイルをアップロードするだけで公開できます。Claude Code に「このサイトを GitHub Pages で公開する手順を教えて」と聞けば、手順を案内してくれます。</p></div>
-    <div class="idea-card"><div class="idea-label">かんたん</div><h4>Netlify Drop（無料）</h4><p>netlify.com/drop にアクセスし、フォルダをドラッグ＆ドロップするだけで公開できます。最も簡単な方法です。</p></div>
+    <div class="idea-card"><div class="idea-label">いちばん簡単</div><h4>Netlify Drop（無料）</h4><p>netlify.com/drop にアクセスし、「portfolio」フォルダをドラッグ＆ドロップするだけで公開できます。アカウント不要で最も簡単な方法です。</p></div>
+    <div class="idea-card"><div class="idea-label">おすすめ</div><h4>GitHub Pages（無料）</h4><p>GitHub アカウントを作ってファイルをアップロードするだけで公開できます。Cowork に「このサイトを GitHub Pages で公開する手順を教えて」と聞けば、手順を案内してくれます。</p></div>
   </div>
 
   <h3>次のステップ</h3>
@@ -406,7 +486,7 @@ cd ~/my-portfolio</pre></div>
   <div class="step-list">
     <div class="step-item"><div class="step-dot"></div><p><strong>サイトの継続改善：</strong>「ブログセクション追加して」「お問い合わせフォーム付けて」など機能を足していく</p></div>
     <div class="step-item"><div class="step-dot"></div><p><strong>別のサイトを作る：</strong>クライアント向けLPやチーム紹介ページなど業務で使えるサイトに挑戦</p></div>
-    <div class="step-item"><div class="step-dot"></div><p><strong>業務の自動化：</strong>CSV整理、レポート自動作成、メールテンプレート生成など Web 以外にも応用</p></div>
+    <div class="step-item"><div class="step-dot"></div><p><strong>業務の自動化：</strong>Cowork でCSV整理、レポート自動作成、ファイル一括リネームなど日常業務にも応用</p></div>
   </div>
 
   <h3>より良い指示を出すコツ</h3>
@@ -422,10 +502,11 @@ cd ~/my-portfolio</pre></div>
 
   <h3>参考リンク</h3>
   <div class="step-list">
-    <div class="step-item"><div class="step-dot"></div><p><strong>Claude Code 公式ドキュメント</strong> — https://docs.anthropic.com/en/docs/claude-code</p></div>
+    <div class="step-item"><div class="step-dot"></div><p><strong>Claude デスクトップアプリ</strong> — https://claude.ai/download</p></div>
     <div class="step-item"><div class="step-dot"></div><p><strong>Claude チャット</strong> — https://claude.ai</p></div>
-    <div class="step-item"><div class="step-dot"></div><p><strong>GitHub Pages ガイド</strong> — https://docs.github.com/ja/pages</p></div>
+    <div class="step-item"><div class="step-dot"></div><p><strong>Cowork プラグイン</strong> — https://claude.com/plugins</p></div>
     <div class="step-item"><div class="step-dot"></div><p><strong>Netlify Drop</strong> — https://app.netlify.com/drop</p></div>
+    <div class="step-item"><div class="step-dot"></div><p><strong>GitHub Pages ガイド</strong> — https://docs.github.com/ja/pages</p></div>
   </div>
 </div></section>
 
@@ -437,7 +518,7 @@ cd ~/my-portfolio</pre></div>
 
 <script>
 function copyCode(btn) {
-  const pre = btn.closest('.code-block').querySelector('pre');
+  const pre = btn.closest('.prompt-block').querySelector('pre');
   navigator.clipboard.writeText(pre.textContent).then(() => {
     btn.textContent = 'Copied!';
     btn.classList.add('copied');
